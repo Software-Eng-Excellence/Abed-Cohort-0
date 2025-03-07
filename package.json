@@ -1,0 +1,31 @@
+{
+  "name": "sami-course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint src",
+    "clean": "rmdir /s /q build",
+    "prebuild": "npm run clean && npm run lint",
+    "build": "tsc",
+    "postbuild": "for /f \"tokens=3\" %A in ('dir /s /-c build ^| find \"File(s)\"') do @echo Finished build with size: %A",
+    "prestart": "npm run build",
+    "start": "node build/index.js",
+    "dev": "ts-node-dev --respawn src/index.ts"
+  },
+  "keywords": [],
+  "author": "Abed karakira",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "eslint": "^9.21.0",
+    "globals": "^16.0.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}
