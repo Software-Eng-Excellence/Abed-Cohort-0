@@ -1,48 +1,121 @@
-import { ItemValidator, MaxPriceValidator, OrderManagment, PriceValidator, Validator } from "config/app_clean.";
-import { FinanceCalculator } from "config/app_clean.";
+// SOLID PRINCIPLES:
 
 
-const orders = [
-    { id: 1, item: "Sponge", price: 15 },
-    { id: 2, item: "Chocolate", price: 20 },
-    { id: 3, item: "Fruit", price: 18 },
-    { id: 4, item: "Red Velvet", price: 25 },
-    { id: 5, item: "Coffee", price: 8 },
-];
+// S: Single Responsibility Princible(SRP)
+// Open Closed Principles (OCP)
+// Liskov Substitution Principle (LSP)  
+// Interface Segregation Principle (ISP)
+// Dependency Inversion Principle (DIP)
 
-const rules = [
-    new PriceValidator(),
-    new ItemValidator(),
-    new MaxPriceValidator()
-];
-
-const OrderManager = new OrderManagment(new Validator(rules), new FinanceCalculator());
-for (const order of orders) {
-    OrderManager.addOrder(order.item, order.price);
+export interface Order {
+    price: number;
+    id: number;
+    item: string;
 }
 
 
-// Adding a new order directly
-const newItem = "Marble";
-const newPrice = 22;
+export class OrderManagment {
+    private orders: Order[] = [];
+    constructor(private validator: IValidator, private calculator: ICalculator) { }
+    getOrders() {
+        return this.orders;
+    }
 
-OrderManager.addOrder(newItem, newPrice);
+    addOrder(item: string, price: number) {
+        const order: Order = { id: this.orders.length + 1, item, price };
+        this.validator.validate(order);
+        this.orders.push(order);
+    }
+
+    getOrder(id: number) {
+        return this.getOrders().find(order => order.id === id);
+    }
+
+    getTotalRevenue() {
+        return this.calculator.getRevenue(this.orders);
+    }
+    getAverageBuyPower() {
+        return this.calculator.getAverageBuyPower(this.orders);
+    }
+}
+
+export class PremiumOrderManagment extends OrderManagment {
+    getOrder(id: number): Order | undefined {
+        console.log("ALRET: Premium order being fetch");
+        return super.getOrder(id);
+    }
+}
+
+interface IValidator {
+    validate(order: Order): void;
+}
+
+interface IPossibleItems {
+    getPossibleItems(): string[];
+}
+
+interface ICalculator {
+    getRevenue(orders: Order[]): number;
+    getAverageBuyPower(orders: Order[]): number;
+}
 
 
-console.log("Orders after adding a new order:", OrderManager.getOrders());
+export class Validator implements IValidator {
 
-// Calculate Total Revenue directly
-console.log("Total Revenue:", OrderManager.getTotalRevenue());
 
-// Calculate Average Buy Power directly
-console.log("Average Buy Power:", OrderManager.getAverageBuyPower());
+    constructor(private rules: IValidator[]) {
 
-// Fetching an order directly
-const fetchId = 2;
-const fetchedOrder = OrderManager.getOrder(fetchId);
-console.log("Order with ID 2:", fetchedOrder);
+    }
 
-// Attempt to fetch a non-existent order
-const nonExistentId = 10;
-const nonExistentOrder = OrderManager.getOrder(nonExistentId);
-console.log("Order with ID 10 (non-existent):", nonExistentOrder);
+    validate(order: Order): void {
+        this.rules.forEach(rule => rule.validate(order));
+    }
+}
+
+export class ItemValidator implements IValidator, IPossibleItems {
+    getPossibleItems(): string[] {
+        return ItemValidator.possibleItems;
+    }
+    private static possibleItems = [
+        "Sponge",
+        "Chocolate",
+        "Fruit",
+        "Red Velvet",
+        "Birthday",
+        "Carrot",
+        "Marble",
+        "Coffee",
+    ];
+    validate(order: Order) {
+        if (!ItemValidator.possibleItems.includes(order.item)) {
+            throw new Error(`Invalid item. Must be one of: ${ItemValidator.possibleItems.join(", ")}`);
+        }
+    }
+}
+
+export class PriceValidator implements IValidator {
+    validate(order: Order) {
+        if (order.price <= 0) {
+            throw new Error("Price must be greater than zero");
+        }
+    }
+}
+
+export class MaxPriceValidator implements IValidator {
+    validate(order: Order) {
+        if (order.price > 100) {
+            throw new Error("Price must be less than 100");
+        }
+    }
+}
+
+export class FinanceCalculator implements ICalculator {
+    // calculate total revenue and avarage buy power
+    public getRevenue(orders: Order[]) {
+        return orders.reduce((total, order) => total + order.price, 0);
+    }
+
+    public getAverageBuyPower(orders: Order[]) {
+        return orders.length === 0 ? 0 : this.getRevenue(orders) / orders.length;
+    }
+}
