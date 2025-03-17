@@ -11,15 +11,19 @@
     "postbuild": "for /f \"tokens=3\" %A in ('dir /s /-c build ^| find \"File(s)\"') do @echo Finished build with size: %A",
     "prestart": "npm run build",
     "start": "node build/index.js",
-    "dev": "ts-node-dev --respawn src/index.ts"
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "test": "jest"
   },
   "keywords": [],
   "author": "Abed karakira",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@types/jest": "^29.5.14",
     "eslint": "^9.21.0",
     "globals": "^16.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.2",
