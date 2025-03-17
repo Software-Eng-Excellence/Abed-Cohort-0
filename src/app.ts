@@ -15,6 +15,9 @@ export interface Order {
 
 
 export class OrderManagment {
+    static addOrder(item: string, price: number) {
+        throw new Error('Method not implemented.');
+    }
     private orders: Order[] = [];
     constructor(private validator: IValidator, private calculator: ICalculator) { }
     getOrders() {
@@ -22,9 +25,13 @@ export class OrderManagment {
     }
 
     addOrder(item: string, price: number) {
-        const order: Order = { id: this.orders.length + 1, item, price };
-        this.validator.validate(order);
-        this.orders.push(order);
+        try {
+            const order: Order = { id: this.orders.length + 1, item, price };
+            this.validator.validate(order);
+            this.orders.push(order);
+        }catch(error: any){
+            throw new Error("[OrderManagment] error adding order " + error.message);
+        }
     }
 
     getOrder(id: number) {
