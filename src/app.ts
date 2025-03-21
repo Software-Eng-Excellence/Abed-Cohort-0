@@ -1,5 +1,7 @@
 // SOLID PRINCIPLES:
 
+import logger from "./util/logger";
+
 
 // S: Single Responsibility Princible(SRP)
 // Open Closed Principles (OCP)
@@ -15,11 +17,10 @@ export interface Order {
 
 
 export class OrderManagment {
-    static addOrder(item: string, price: number) {
-        throw new Error('Method not implemented.');
-    }
     private orders: Order[] = [];
-    constructor(private validator: IValidator, private calculator: ICalculator) { }
+    constructor(private validator: IValidator, private calculator: ICalculator) {
+        logger.debug("OrderManagment instance created");
+    }
     getOrders() {
         return this.orders;
     }
@@ -29,13 +30,17 @@ export class OrderManagment {
             const order: Order = { id: this.orders.length + 1, item, price };
             this.validator.validate(order);
             this.orders.push(order);
-        }catch(error: any){
+        } catch (error: any) {
             throw new Error("[OrderManagment] error adding order " + error.message);
         }
     }
 
     getOrder(id: number) {
-        return this.getOrders().find(order => order.id === id);
+        const order = this.getOrders().find(order => order.id === id);
+        if (!order) {
+            logger.warn(`Order with id ${id} not found`);
+        }
+        return order;
     }
 
     getTotalRevenue() {
@@ -103,6 +108,7 @@ export class ItemValidator implements IValidator, IPossibleItems {
 export class PriceValidator implements IValidator {
     validate(order: Order) {
         if (order.price <= 0) {
+            logger.error(`Price error: ${order.item}`);
             throw new Error("Price must be greater than zero");
         }
     }
