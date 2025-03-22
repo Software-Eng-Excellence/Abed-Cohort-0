@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import { parse as csvParse } from 'csv-parse';
+import { parse as csvParse } from 'csv-parse/sync';
 import { stringify as csvStringify } from 'csv-stringify';
 
 /**
@@ -8,19 +8,16 @@ import { stringify as csvStringify } from 'csv-stringify';
  * @param includeHeader - Whether to include the header row in the output
  * @returns Promise<string[][]> - 2D array of strings representing the CSV content
  */
-export async function readCsvFile(filePath: string , includeHeader: boolean = false): Promise<string[][]> {
+export async function readCsvFile(filePath: string, includeHeader: boolean = false): Promise<string[][]> {
     try {
         const fileContent = await fs.readFile(filePath, 'utf-8');
-        return new Promise((resolve, reject) => {
-            csvParse(fileContent, {
-                trim: true,
-                skip_empty_lines: true
-            }, (err, records: string[][]) => {
-                if (err) reject(err);
-                if(!includeHeader) records.shift();
-                resolve(records);
-            });
+        const records = csvParse(fileContent, {
+            trim: true,
+            skip_empty_lines: true
         });
+        if (!fileContent) return [];
+        if (!includeHeader) records.shift();
+        return fileContent.trim().split('\n').map((line: string) => line.split(','));
     } catch (error) {
         throw new Error(`Error reading CSV file: ${error}`);
     }

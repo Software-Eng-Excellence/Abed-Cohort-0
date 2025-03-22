@@ -2,7 +2,7 @@ import config from "../config";
 import winston from "winston";
 
 
-const {logDir , isDev} = config;
+const { logDir, isDev } = config;
 
 
 const logFileFormatm = winston.format.combine(
@@ -33,9 +33,9 @@ const logger = winston.createLogger({
     ]
 });
 
-if(isDev){
+if (isDev) {
     logger.add(new winston.transports.Console({ format: logConsoleFormat }));
-    logger.level= "debug";
+    logger.level = "debug";
 }
 
 

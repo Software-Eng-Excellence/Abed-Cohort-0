@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <rows>
+            <row>
+                <OrderID>3001</OrderID>
+                <Type>Table</Type>
+                <Material>Rattan</Material>
+                <Color>Blue</Color>
+                <Size>Extra Large</Size>
+                <Style>Modern</Style>
+                <AssemblyRequired>No</AssemblyRequired>
+                <Warranty>2 Years</Warranty>
+                <Price>380</Price>
+                <Quantity>1</Quantity>
+            </row>
+            <row>
+                <OrderID>3002</OrderID>
+                <Type>Chair</Type>
+                <Material>Wood</Material>
+                <Color>Brown</Color>
+                <Size>Medium</Size>
+                <Style>Rustic</Style>
+                <AssemblyRequired>Yes</AssemblyRequired>
+                <Warranty>1 Year</Warranty>
+                <Price>120</Price>
+                <Quantity>4</Quantity>
+            </row>
+        </rows>
