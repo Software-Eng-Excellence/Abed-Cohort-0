@@ -1,48 +1,60 @@
-import { ItemValidator, MaxPriceValidator, OrderManagment, PriceValidator, Validator } from "../src/app";
-import { FinanceCalculator } from "../src/app";
+import logger from "./util/logger";
+import { readCsvFile } from "./util/parser";
+import { parseJSON } from "./util/jsonParser";
+import { parseXML } from "./util/xmlParser";
+import fs from "fs";
+import path from "path";
 
+async function main() {
+    try {
+        // Parse CSV files
+        const csvFiles = ["src/data/cake orders.csv", "src/data/clothing orders.csv"];
+        for (const filePath of csvFiles) {
+            if (fs.existsSync(filePath)) {
+                logger.info(`Parsing CSV file: ${filePath}`);
+                const data = await readCsvFile(filePath);
+                data.forEach((row) => {
+                    logger.info(row);
+                });
+            } else {
+                logger.error(`CSV file not found: ${filePath}`);
+            }
+        }
 
-const orders = [
-    { id: 1, item: "Sponge", price: 15 },
-    { id: 2, item: "Chocolate", price: 20 },
-    { id: 3, item: "Fruit", price: 18 },
-    { id: 4, item: "Red Velvet", price: 25 },
-    { id: 5, item: "Coffee", price: 8 },
-];
+        // Parse JSON and XML files
+        const otherFiles = [
+            "src/data/book orders.json",
+            "src/data/pet orders.json",
+            "src/data/furniture orders.xml",
+            "src/data/toy orders.xml",
+        ];
 
-const rules = [
-    new PriceValidator(),
-    new ItemValidator(),
-    new MaxPriceValidator(),
-];
+        for (const filePath of otherFiles) {
+            if (!fs.existsSync(filePath)) {
+                logger.error(`File not found: ${filePath}`);
+                continue;
+            }
 
-const OrderManager = new OrderManagment(new Validator(rules), new FinanceCalculator());
-for (const order of orders) {
-    OrderManager.addOrder(order.item, order.price);
+            const ext = path.extname(filePath).toLowerCase();
+            switch (ext) {
+                case ".json":
+                    logger.info(`Parsing JSON file: ${filePath}`);
+                    console.log(parseJSON(filePath)); // Output parsed data
+                    break;
+
+                case ".xml":
+                    logger.info(`Parsing XML file: ${filePath}`);
+                    console.log(await parseXML(filePath)); // Output parsed data
+                    break;
+
+                default:
+                    logger.warn(`Unsupported file format: ${filePath}`);
+                    break;
+            }
+        }
+    } catch (error) {
+        logger.error(`An error occurred in main(): ${error}`);
+    }
 }
 
-
-// Adding a new order directly
-const newItem = "Marble";
-const newPrice = 22;
-
-OrderManager.addOrder(newItem, newPrice);
-
-
-console.log("Orders after adding a new order:", OrderManager.getOrders());
-
-// Calculate Total Revenue directly
-console.log("Total Revenue:", OrderManager.getTotalRevenue());
-
-// Calculate Average Buy Power directly
-console.log("Average Buy Power:", OrderManager.getAverageBuyPower());
-
-// Fetching an order directly
-const fetchId = 2;
-const fetchedOrder = OrderManager.getOrder(fetchId);
-console.log("Order with ID 2:", fetchedOrder);
-
-// Attempt to fetch a non-existent order
-const nonExistentId = 10;
-const nonExistentOrder = OrderManager.getOrder(nonExistentId);
-console.log("Order with ID 10 (non-existent):", nonExistentOrder);
+main();

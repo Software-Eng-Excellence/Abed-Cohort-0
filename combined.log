@@ -1,0 +1,5 @@
+{"level":"info","message":"Orders after adding a new order:[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"}
+{"level":"info","message":"Total Revenue:108"}
+{"level":"info","message":"Average Buy Power:18"}
+{"level":"info","message":"Order with ID 2:[object Object]"}
+{"level":"info","message":"Order with ID 10 (non-existent):undefined"}
