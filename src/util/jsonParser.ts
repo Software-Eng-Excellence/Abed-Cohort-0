@@ -11,24 +11,24 @@ export function parseJSON(filePath: string, outputFilePath?: string): any {
     try {
         // Read the file synchronously
         const data = fs.readFileSync(filePath, 'utf-8');
-        logger.info(`Successfully read JSON file: ${filePath}`);
+        logger.debug(`Successfully read JSON file: ${filePath}`);
         
         // Parse the JSON data
         const parsedData = JSON.parse(data);
 
         // Log the parsed data
-        logger.info(`Parsed data: ${JSON.stringify(parsedData, null, 2)}`);
+        logger.debug(`Parsed data: ${JSON.stringify(parsedData, null, 2)}`);
 
         // If an output file path is provided, write the parsed data to the file
         if (outputFilePath) {
             // Log before writing
-            logger.info(`Attempting to write parsed data to: ${outputFilePath}`);
+            logger.debug(`Attempting to write parsed data to: ${outputFilePath}`);
             
             // Write the parsed data to the output file
             fs.writeFileSync(outputFilePath, JSON.stringify(parsedData, null, 2), 'utf-8');
             
             // Log after writing
-            logger.info(`Successfully wrote parsed data to: ${outputFilePath}`);
+            logger.debug(`Successfully wrote parsed data to: ${outputFilePath}`);
         }
 
         return parsedData;
