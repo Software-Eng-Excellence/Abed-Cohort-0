@@ -1,4 +1,5 @@
-import { Item, ItemCategory } from "./item.model";
+import { Item } from './Item.model';
+import { ItemCategory } from './Item.model';
 
 export class Cake implements Item {
     private type: string;

@@ -1,14 +1,14 @@
-import { Item, ItemCategory } from "./item.model";
+import { Item, ItemCategory } from "./Item.model";
 
-type ClothingType = | "Shirt" | "Pants" | "Dress" | "Skirt" | "Jacket" | "Sweater" | "T-shirt" | "Shorts" | "Coat" | "Underwear";
-type Size = "XS" | "S" | "M" | "L" | "XL" | "XXL" | "XXXL";
-type Color = "Black" | "White" | "Red" | "Blue" | "Green" | "Yellow" | "Purple" | "Pink" | "Gray" | "Brown" | "Navy" | "Beige";
-type Material = "Cotton" | "Wool" | "Silk" | "Polyester" | "Leather" | "Denim" | "Linen" | "Nylon";
-type Pattern = "Solid" | "Striped" | "Plaid" | "Floral" | "Polka Dot" | "Checkered" | "Plain" | "Printed";
-type Brand = "Nike" | "Adidas" | "Zara" | "H&M" | "Gucci" | "Prada" | "Uniqlo" | "Other";
-type Gender = "Male" | "Female" | "Unisex";
-type Packaging = "Hanger" | "Folded" | "Box" | "Bag" | "Vacuum Sealed";
-type SpecialRequest = "None" | "Gift Wrap" | "Express Delivery" | "Special Care" | "Insurance";
+export type ClothingType = | "Shirt" | "Pants" | "Dress" | "Skirt" | "Jacket" | "Sweater" | "T-shirt" | "Shorts" | "Coat" | "Underwear";
+export type Size = "XS" | "S" | "M" | "L" | "XL" | "XXL" | "XXXL";
+export type Color = "Black" | "White" | "Red" | "Blue" | "Green" | "Yellow" | "Purple" | "Pink" | "Gray" | "Brown" | "Navy" | "Beige";
+export type Material = "Cotton" | "Wool" | "Silk" | "Polyester" | "Leather" | "Denim" | "Linen" | "Nylon";
+export type Pattern = "Solid" | "Striped" | "Plaid" | "Floral" | "Polka Dot" | "Checkered" | "Plain" | "Printed";
+export type Brand = "Nike" | "Adidas" | "Zara" | "H&M" | "Gucci" | "Prada" | "Uniqlo" | "Other";
+export type Gender = "Male" | "Female" | "Unisex";
+export type Packaging = "Hanger" | "Folded" | "Box" | "Bag" | "Vacuum Sealed";
+export type SpecialRequest = "None" | "Gift Wrap" | "Express Delivery" | "Special Care" | "Insurance";
 
 export class Clothing implements Item {
 
