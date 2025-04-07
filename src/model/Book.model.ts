@@ -1,10 +1,10 @@
-import { Item, ItemCategory } from "./item.model";
+import { Item, ItemCategory } from "./Item.model";
 
-type Genre = | "Fiction" | "Non-Fiction" | "Mystery" | "Science Fiction" | "Fantasy" | "Romance" | "Thriller" | "Horror" | "Biography" | "History" | "Poetry" | "Drama";
-type Format = | "Hardcover" | "Paperback" | "Ebook" | "Audiobook" | "Graphic Novel" | "Textbook";
-type Language = | "English" | "Spanish" | "French" | "German" | "Chinese" | "Japanese" | "Russian" | "Italian" | "Portuguese" | "Arabic";
-type SpecialEdition = | "Limited Edition" | "Collector's Edition" | "Anniversary Edition" | "Signed Edition" | "Illustrated Edition";
-type PackagingType = | "Box" | "Wrap" | "Bag" | "Envelope" | "Plastic" | "Paper" | "Cardboard";
+export type Genre = | "Fiction" | "Non-Fiction" | "Mystery" | "Science Fiction" | "Fantasy" | "Romance" | "Thriller" | "Horror" | "Biography" | "History" | "Poetry" | "Drama";
+export type Format = | "Hardcover" | "Paperback" | "Ebook" | "Audiobook" | "Graphic Novel" | "Textbook";
+export type Language = | "English" | "Spanish" | "French" | "German" | "Chinese" | "Japanese" | "Russian" | "Italian" | "Portuguese" | "Arabic";
+export type SpecialEdition = | "Limited Edition" | "Collector's Edition" | "Anniversary Edition" | "Signed Edition" | "Illustrated Edition";
+export type PackagingType = | "Box" | "Wrap" | "Bag" | "Envelope" | "Plastic" | "Paper" | "Cardboard";
 
 export class Book implements Item {
     private title: string;

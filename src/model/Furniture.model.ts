@@ -1,9 +1,9 @@
-import { Item, ItemCategory } from "./item.model";
+import { Item, ItemCategory } from "./Item.model";
 
-type Type = 'chair' | 'table' | 'bed' | 'sofa' | 'cabinet' | 'desk' | 'shelf';
-type Material = 'wood' | 'metal' | 'plastic' | 'glass' | 'leather' | 'fabric' | 'bamboo' | 'marble' | 'rattan';
-type Color = 'black' | 'white' | 'brown' | 'gray' | 'beige' | 'red' | 'blue' | 'green' | 'yellow' | 'orange' | 'purple' | 'pink';
-type Style = 'modern' | 'traditional' | 'contemporary' | 'rustic' | 'industrial' | 'scandinavian' | 'mid-century' | 'minimalist' | 'bohemian' | 'coastal';
+export type Type = 'chair' | 'table' | 'bed' | 'sofa' | 'cabinet' | 'desk' | 'shelf';
+export type Material = 'wood' | 'metal' | 'plastic' | 'glass' | 'leather' | 'fabric' | 'bamboo' | 'marble' | 'rattan';
+export type Color = 'black' | 'white' | 'brown' | 'gray' | 'beige' | 'red' | 'blue' | 'green' | 'yellow' | 'orange' | 'purple' | 'pink';
+export type Style = 'modern' | 'traditional' | 'contemporary' | 'rustic' | 'industrial' | 'scandinavian' | 'mid-century' | 'minimalist' | 'bohemian' | 'coastal';
 
 export class Furniture implements Item {
     private type: Type;

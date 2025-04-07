@@ -1,10 +1,10 @@
-import { Item, ItemCategory } from "./item.model";
+import { Item, ItemCategory } from "./Item.model";
 
 
-type ProductType = "food" | "toy" | "accessory";
-type PetType = "dog" | "cat" | "bird" | "fish" | "reptile" | "small mammal";
-type Brand = "Purina" | "Royal Canin" | "Pedigree" | "Whiskas" | "Kong" | "Friskies";
-type Size = "small" | "medium" | "large";
+export type ProductType = "food" | "toy" | "accessory";
+export type PetType = "dog" | "cat" | "bird" | "fish" | "reptile" | "small mammal";
+export type Brand = "Purina" | "Royal Canin" | "Pedigree" | "Whiskas" | "Kong" | "Friskies";
+export type Size = "small" | "medium" | "large";
 
 
 

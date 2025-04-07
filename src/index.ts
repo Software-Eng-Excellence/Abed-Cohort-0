@@ -1,60 +1,98 @@
-import logger from "./util/logger";
-import { readCsvFile } from "./util/parser";
-import { parseJSON } from "./util/jsonParser";
-import { parseXML } from "./util/xmlParser";
-import fs from "fs";
-import path from "path";
+import { CakeBuilder } from "./model/builders/cake.builder";
+import { BookBuilder } from "./model/builders/book.builder";
+import { ClothingBuilder } from "./model/builders/clothing.builder";
+import { FurnitureBuilder } from "./model/builders/furniture.builder";
+import { PetBuilder } from "./model/builders/pet.builder";
+import { ToyBuilder } from "./model/builders/toy.builder";
+
 
 async function main() {
-    try {
-        // Parse CSV files
-        const csvFiles = ["src/data/cake orders.csv", "src/data/clothing orders.csv"];
-        for (const filePath of csvFiles) {
-            if (fs.existsSync(filePath)) {
-                logger.info(`Parsing CSV file: ${filePath}`);
-                const data = await readCsvFile(filePath);
-                data.forEach((row) => {
-                    logger.info(row);
-                });
-            } else {
-                logger.error(`CSV file not found: ${filePath}`);
-            }
-        }
 
-        // Parse JSON and XML files
-        const otherFiles = [
-            "src/data/book orders.json",
-            "src/data/pet orders.json",
-            "src/data/furniture orders.xml",
-            "src/data/toy orders.xml",
-        ];
+    // Example usage of CakeBuilder
+    const cakeBuilder = new CakeBuilder();
+    const cake = cakeBuilder
+        .setType("Birthday")
+        .setFlavor("Chocolate")
+        .setFilling("Vanilla Cream")
+        .setSize(8)
+        .setLayers(2)
+        .setFrostingType("Buttercream")
+        .setFrostingFlavor("Chocolate")
+        .setDecorationType("Flowers")
+        .setDecorationColor("Pink")
+        .setCustomMessage("Happy Birthday!")
+        .setShape("Round")
+        .setAllergies("Nuts")
+        .setSpecialIngredients("Organic Cocoa")
+        .setPackagingType("Box")
+        .build();
+    console.log(cake);
 
-        for (const filePath of otherFiles) {
-            if (!fs.existsSync(filePath)) {
-                logger.error(`File not found: ${filePath}`);
-                continue;
-            }
+    // Example usage of BookBuilder
+    const bookBuilder = new BookBuilder();
+    const book = bookBuilder
+        .setTitle("The Great Gatsby")
+        .setAuthor("F. Scott Fitzgerald")
+        .setGenre("Fiction")
+        .setFormat("Hardcover")
+        .setLanguage("English")
+        .setPublisher("Scribner")
+        .setSpecialEdition("Collector's Edition")
+        .setPackaging("Box")
+        .build();
+    console.log(book);
 
-            const ext = path.extname(filePath).toLowerCase();
-            switch (ext) {
-                case ".json":
-                    logger.info(`Parsing JSON file: ${filePath}`);
-                    console.log(parseJSON(filePath)); // Output parsed data
-                    break;
+    // Example usage of ClothingBuilder
+    const clothingBuilder = new ClothingBuilder();
+    const clothing = clothingBuilder
+        .setClothingType("Shirt")
+        .setSize("M")
+        .setColor("Blue")
+        .setMaterial("Cotton")
+        .setPattern("Striped")
+        .setBrand("Nike")
+        .setGender("Unisex")
+        .setPackaging("Hanger")
+        .setSpecialRequest("Gift Wrap")
+        .build();
+    console.log(clothing);
 
-                case ".xml":
-                    logger.info(`Parsing XML file: ${filePath}`);
-                    console.log(await parseXML(filePath)); // Output parsed data
-                    break;
+    // Example usage of FurnitureBuilder
+    const furnitureBuilder = new FurnitureBuilder();
+    const furniture = furnitureBuilder
+        .setType("sofa")
+        .setMaterial("leather")
+        .setColor("black")
+        .setSize("3-seater")
+        .setStyle("modern")
+        .setAssemblyRequired(true)
+        .setWarranty("2 years")
+        .build();
+    console.log(furniture);
 
-                default:
-                    logger.warn(`Unsupported file format: ${filePath}`);
-                    break;
-            }
-        }
-    } catch (error) {
-        logger.error(`An error occurred in main(): ${error}`);
-    }
+    // Example usage of PetBuilder
+    const petBuilder = new PetBuilder();
+    const pet = petBuilder
+        .setProductType("toy")
+        .setPetType("dog")
+        .setBrand("Purina")
+        .setSize("small")
+        .setFlavor("Chicken")
+        .setEcoFriendly("Yes")
+        .build();
+    console.log(pet);
+
+    // Example usage of ToyBuilder
+    const toyBuilder = new ToyBuilder();
+    const toy = toyBuilder
+        .setType("action figure")
+        .setAgeGroup("infant")
+        .setBrand("Hasbro")
+        .setMaterial("plastic")
+        .setBatteryRequired("no")
+        .setEducational("yes")
+        .build();
+    console.log(toy);
 }
 
 main();
